@@ -10,7 +10,16 @@ const moviesList = [
 ];
 
 function App() {
-  const [selectedGenre, setSelectedGenre] = useState(""); 
+  const [selectedGenre, setSelectedGenre] = useState("");
+  const [filteredMovies, setFilteredMovies] = useState(moviesList);
+
+  useEffect(() => {
+    setFilteredMovies(
+      moviesList.filter(
+        (movie) => selectedGenre === "" || movie.genre === selectedGenre
+      )
+    );
+  }, [selectedGenre]);
 
   return (
     <div className="container">
@@ -27,7 +36,7 @@ function App() {
 
       {/* Lista film */}
       <ul>
-        {moviesList.map((movie, index) => (
+        {filteredMovies.map((movie, index) => (
           <li key={index}>
             {movie.title} - <i>{movie.genre}</i>
           </li>
